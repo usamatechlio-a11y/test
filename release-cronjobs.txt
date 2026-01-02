@@ -201,3 +201,6 @@
 # Cronjob for Vehicle Of Interest Alert
 */60 * * * * cd /usr/src/app && bin/cake VehicleLeadWactherAlert vechicleOfInterestAlerts >> /var/log/cron_in_VehicleLeadWacther.log 2>&1
 
+# Update AI auto response timeout leads
+*/5 * * * * cd /usr/src/app && bin/cake AiAutoResponse updateAutoAiTimeoutLeads >> /var/log/cron_ai_auto_timeout.log 2>&1
+
