@@ -1,0 +1,203 @@
+#***** Cron file for Dev environment *****#
+#=========================================#
+
+# Auto Responder 1
+#*/5 * * * * cd /usr/src/app && bin/cake AutoResponderPublish publishEmail >> /var/log/cron_publishEmail.log 2>&1
+
+# Auto Responder 2
+#*/14 * * * * cd /usr/src/app && bin/cake AutoResponder birthDayReminder >> /var/log/cron_birthDayReminder.log 2>&1
+
+# Auto Responder 3
+#*/15 * * * * cd /usr/src/app && bin/cake AutoResponder purchaseAnniversary >> /var/log/cron_purchaseAnniversary.log 2>&1
+
+# Auto Responder 4
+#*/17 * * * * cd /usr/src/app && bin/cake AutoResponder sendWarrantyReminder >> /var/log/cron_sendWarrantyReminder.log 2>&1
+
+# Auto Responder 5
+#*/10 * * * * cd /usr/src/app && bin/cake AutoResponder appointmentReminder >> /var/log/cron_appointmentReminder.log 2>&1
+
+# Eblast queue process
+#*/6 * * * * cd /usr/src/app && bin/cake EblastQueue >> /var/log/cron_eblastQueues.log 2>&1
+
+# Eblast send
+#*/6 * * * * cd /usr/src/app && bin/cake EblastSend >> /var/log/cron_eblastSend.log 2>&1
+
+# Textblast queue process
+*/6 * * * * cd /usr/src/app && bin/cake TextblastQueue >> /var/log/cron_textblastQueues.log 2>&1
+
+# Send alert for stuck process
+#0 * * * * cd /usr/src/app && bin/cake process_check >> /var/log/cronjobs.log 2>&1
+
+# Email Queue
+#*/3 * * * * cd /usr/src/app && bin/cake EmailQueue processQueue 30 >> /var/log/cron_EmailNotiSend.log 2>&1
+
+# All Report alert Master, Favorite Report, Recap
+*/10 * * * * cd /usr/src/app && bin/cake report_email_alert >> /var/log/cron_report.log 2>&1
+
+# Email Sync
+#*/4 * * * * cd /usr/src/app && bin/cake EmailSync2 AutoSync >> /var/log/cron_autoSync.log 2>&1
+
+# Email Sync 2
+*/5 * * * * cd /usr/src/app && bin/cake EmailSync2 emailSyncQueueProcess >> /var/log/cron_emailSyncQueue.log 2>&1
+
+# Email Offline Nylas Users Sync
+0 */1 * * * cd /usr/src/app && bin/cake EmailSync2 emailNylasSyncProcess >> /var/log/cron_emailNylasSyncProcess.log 2>&1
+
+# Check status for Bulk lead action process  and start process if stopped
+*/15 * * * * cd /usr/src/app && bin/cake BulkLeadActionChecker checkProcesses >> /var/log/cron_bulkLeadCheck.log 2>&1
+
+# Check sales appointments that are getting overdue
+#*/5 * * * * cd /usr/src/app && bin/cake SalesAppointmentOverdueChecker checkOverdue >> /var/log/cron_salesAppointmentOverdueCheck.log 2>&1
+
+# Check sales appointment reminders
+#*/5 * * * * cd /usr/src/app && bin/cake SalesAppointmentOverdueChecker checkReminders >> /var/log/cron_salesAppointmentCheckReminders.log 2>&1
+
+# Bandwidth cron for sending sms notifications
+#*/3 * * * * cd /usr/src/app && bin/cake Bandwidth send_sms >> /var/log/cron_send_sms.log 2>&1
+
+# GrabLeads command for inbox parsing
+#*/5 * * * * cd /usr/src/app && bin/cake GrabLeadsQueue >> /var/log/cron_grab_leads.log 2>&1
+
+# Client inbox clean up
+#0 9 * * * cd /usr/src/app && bin/cake GrabLeads cleanInbox 2 >> /var/log/cron_clean_inbox2.log 2>&1
+
+# Global inbox clean up
+#0 9 * * * cd /usr/src/app && bin/cake GrabLeads cleanInbox >> /var/log/cron_clean_inbox.log 2>&1
+
+# Instock unit parser ( inventory feed)
+#5 */3 * * * cd /usr/src/app && bin/cake InstockUnits updateMultiProcess xml >> /var/log/cron_updateMultiProcess.log 2>&1
+
+# Lightspeed Nightly sync
+#30 3 * * * cd /usr/src/app && bin/cake LightspeedApi fetch_adp_data >> /var/log/cron_fetch_adp_data.log 2>&1
+
+# Lightspeed Nightly sync 2
+#30 4 * * * cd /usr/src/app && bin/cake LightspeedApi fetch_adp_light_speed_data >> /var/log/cron_fetch_adp_light_speed_data.log 2>&1
+
+# Lightspeed Incremental vendor 91
+#5-59/30 * * * * cd /usr/src/app && bin/cake LightspeedApi fetch_adp_contacts >> /var/log/cron_fetch_adp_contacts.log 2>&1
+
+# Lightspeed Incremental vendor 93
+#25-59/30 * * * * cd /usr/src/app && bin/cake LightspeedApi fetch_adp_parts >> /var/log/cron_fetch_adp_parts.log 2>&1
+
+# Lightspeed Incremental vendor 94
+#15-59/30 * * * * cd /usr/src/app && bin/cake LightspeedApi fetch_adp_sales >> /var/log/cron_fetch_adp_sales.log 2>&1
+
+# Lightspeed POST Lead back to DMS
+#*/4 * * * * cd /usr/src/app && bin/cake VendorLeadPost import_lead >> /var/log/cron_import_lead.log 2>&1
+
+# Parse not parsed leads
+#*/16 * * * * cd /usr/src/app && bin/cake GrabLeads allreparseleads >> /var/log/cron_allreparseleads.log 2>&1
+
+# ShiftDigital send back dispositions 1-5
+#*/9 * * * * cd /usr/src/app && bin/cake VendorLeadActivity post_lead_activities 1 5 >> /var/log/cron_post_lead_activities1_5.log 2>&1
+
+# ShiftDigital send back dispositions 6-10
+#*/9 * * * * cd /usr/src/app && bin/cake VendorLeadActivity post_lead_activities 6 10 >> /var/log/cron_post_lead_activities6_10.log 2>&1
+
+# ShiftDigital send back dispositions 11-15
+#*/9 * * * * cd /usr/src/app && bin/cake VendorLeadActivity post_lead_activities 11 15>> /var/log/cron_post_lead_activities11_15.log 2>&1
+
+# Talon feed sync up
+#12 */2 * * * cd /usr/src/app && bin/cake TalonSetup import_data >> /var/log/cron_import_data.log 2>&1
+
+# V1 Post Polaris Lead Activity
+#*/5 * * * * cd /usr/src/app && bin/cake PolarisActivity post_lead_activities >> /var/log/cron_post_lead_activities.log 2>&1
+
+#  Vendor specific instock feed parsing
+#0 14 * * * cd /usr/src/app && bin/cake InstockUnits update 2 335  >> /var/log/cron_instock_Vendor_335.log 2>&1
+
+#30 1,13 * * * cd /usr/src/app && bin/cake InstockUnits update 2 459  >> /var/log/cron_instock_Vendor_459.log 2>&1
+
+# manually run instock unit parser from v2 admin panel
+*/5 * * * * cd /usr/src/app && bin/cake InstockUnits queueProcesse >> /var/log/cron_in_queueProcesse.log 2>&1
+
+# phantomjs instock unit parser ( inventory feed for phantomjs)
+#7 */3 * * * cd /usr/src/app && bin/cake InstockUnits updateMultiProcess >> /var/log/cron_in_updateMultiProcess.log 2>&1
+
+#  Dealer ID specific instock feed parsing
+#*/5 * * * * cd /usr/src/app && bin/cake InstockUnits update 1414  >> /var/log/cron_in_updateDealerSpecific.log 2>&1
+
+# Motility deals Nightly sync
+20 4 * * * cd /usr/src/app && bin/cake MotilitySyncApi fetchGetDealListApiData >> /var/log/cron_motility_deal_data.log 2>&1
+
+# Motility deals bulk Nightly sync
+15 3 * * * cd /usr/src/app && bin/cake MotilitySyncApi fetchBulkGetDealListApiData >> /var/log/cron_motility_deal_data.log 2>&1
+
+# ScheduleSms send scheduled sms bulk
+#*/6 * * * * cd /usr/src/app && bin/cake sms_schedule_queue >> /var/log/cron_schedulesms.log 2>&1
+
+# Zii contact bulk Nightly sync
+45 1 * * * cd /usr/src/app && bin/cake ZiiSyncApi fetchBulkApiContacts >> /var/log/cron_zii_contact_data.log 2>&1
+
+# Zii deals bulk Nightly sync
+45 4 * * * cd /usr/src/app && bin/cake ZiiSyncApi fetchBulkApiMUInvoicing >> /var/log/cron_zii_deal_data.log 2>&1
+
+# Zii contact Daily sync
+15 11 * * * cd /usr/src/app && bin/cake ZiiSyncApi fetchApiContacts >> /var/log/cron_zii_contact_data.log 2>&1
+
+# Zii deals Daily sync
+45 12 * * * cd /usr/src/app && bin/cake ZiiSyncApi fetchApiMUInvoicing >> /var/log/cron_zii_deal_data.log 2>&1
+
+# Stripe payment transaction status check
+#0 * * * * cd /usr/src/app && bin/cake stripe_payment_transaction_status_check >> /var/log/stripe_payment_transaction_status_check.log 2>&1
+
+#lizzy serializedleads lead injection
+#15 5 * * * cd usr/src/app && bin/cake lizzy_api processSoldLeads >> /var/log/cron_lizzy_serializedsales.log 2>&1
+
+#Lizzy historical sync process Contacts
+#15 7 * * * cd /usr/src/app && bin/cake lizzy_api processBulkContacts >> /var/log/cron_lizzy_historical_processContacts.log 2>&1
+
+#Lizzy historical sync sales leads
+#15 5 * * * cd /usr/src/app && bin/cake lizzy_api processBulkSoldLeads >> /var/log/cron_lizzy_historical_serializedsales.log 2>&1
+
+# Delete Nylas dormant accounts
+#30 1 * * * cd /usr/src/app && bin/cake EmailSync2 deleteNylasAccounts >> /var/log/cron_deleteNylasAccounts.log 2>&1
+
+# Cancel Nylas accounts
+#30 2 * * * cd /usr/src/app && bin/cake EmailSync2 cancelNylasAccounts >> /var/log/cron_cancelNylasAccounts.log 2>&1
+
+#Lizzy contact Daily sync
+#15 4 * * * cd usr/src/app && bin/cake lizzy_api processContacts >> /var/log/cron_lizzy_processContacts.log 2>&1
+
+#sync sendgrid emails list
+#*/10 * * * * cd /usr/src/app && bin/cake SendgridSync index >> /var/log/cron_SendGridSync.log 2>&1
+
+#DealerFire cron job to parse XML files of leads
+#*/10 * * * * cd /usr/src/app && bin/cake DealerFire fetchLeadData >> /var/log/cron_dealerFireLeads.log 2>&1
+
+# Unworked Leads scan
+*/5 * * * * cd /usr/src/app && bin/cake LeadAutomationProcessQueue Unworked >> /var/log/Lead_automation_process_queue_command.log 2>&1
+
+# Dormant Leads scan
+0 */3 * * * cd /usr/src/app && bin/cake LeadAutomationProcessQueue Dormant >> /var/log/Lead_automation_process_queue_command.log 2>&1
+
+# Overdue Event scan
+30 18 * * * cd /usr/src/app && bin/cake LeadAutomationProcessQueue OverdueEventThreshold >> /var/log/Lead_automation_process_queue_command.log 2>&1
+
+# Step Reset scan
+30 10 * * * cd /usr/src/app && bin/cake LeadAutomationProcessQueue StepReset >> /var/log/Lead_automation_process_queue_command.log 2>&1
+
+# Optinblast queue process
+*/6 * * * * cd /usr/src/app && bin/cake OptinblastQueue >> /var/log/cron_optinblastQueues.log 2>&1
+
+# DX1 Contact Daily Sync
+#45 6 * * * cd /usr/src/app && bin/cake DX1SyncApi fetchApiContacts >> /var/log/cron_dx1_contact_data.log 2>&1
+
+# DX1 Deals Daily Sync
+#45 18 * * * cd /usr/src/handler && bin/cake DX1SyncApi fetchApiMUDeals >> /var/log/cron_dx1_deal_data.log 2>&1
+
+# Post Lead Conversation to TI (Trader Interactive)
+*/1 * * * * cd /usr/src/app && bin/cake VendorLeadPostTi startPostLeadCron >> /var/log/cron_ti_post_lead.log 2>&1
+
+# Import Contact Lead to TI (Trader Interactive)
+*/1 * * * * cd /usr/src/app && bin/cake VendorLeadPostTi import_lead >> /var/log/cron_ti_import_lead.log 2>&1
+
+# AI Auto Email Response
+*/1 * * * * cd /usr/src/app && bin/cake AiAutoResponse fetchAutoEmails >> /var/log/cron_ai_auto_email.log 2>&1
+
+# Instock unit parser for Vendor 40
+45 17 * * * cd /usr/src/app && bin/cake InstockUnits update 2 40  >> /var/log/cron_instock_Vendor_40.log 2>&1
+
+# Cronjob for Vehicle Of Interest Alert
+*/60 * * * * cd /usr/src/app && bin/cake VehicleLeadWactherAlert vechicleOfInterestAlerts >> /var/log/cron_in_VehicleLeadWacther.log 2>&1
+
