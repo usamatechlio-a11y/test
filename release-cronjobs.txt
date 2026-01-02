@@ -201,6 +201,8 @@
 # Cronjob for Vehicle Of Interest Alert
 */60 * * * * cd /usr/src/app && bin/cake VehicleLeadWactherAlert vechicleOfInterestAlerts >> /var/log/cron_in_VehicleLeadWacther.log 2>&1
 
+# Blackpurl cron job to parse customer CSV files
+0 11 * * * cd /usr/src/app && bin/cake BlackpurlIntegration fetch_customer_data >> /var/log/cron_in_blackpurlCustomer.log 2>&1
 # Update AI auto response timeout leads
 */5 * * * * cd /usr/src/app && bin/cake AiAutoResponse updateAutoAiTimeoutLeads >> /var/log/cron_ai_auto_timeout.log 2>&1
 
